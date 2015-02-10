@@ -18,7 +18,7 @@ Here are some ideas to improve the application:
   - Add private messaging
   - Share your improvements!
 
-  - Joining users see up to a 100 of latest messages in their personal message boards
+  - (DONE) Joining users see up to a 100 of latest messages in their personal message boards
   - The message board clearly indicates the authorship of messages by the same user
   - The anonymous user identity is assigned automatically, and it survives browser restarts
 
