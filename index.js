@@ -15,7 +15,7 @@ io.on('connection', function(socket){
         socket.emit('chat message', queue.elements[i]);
     }
     socket.on('chat message', function(msg){
-        console.log('message: ' + msg);
+        console.log('message: ', msg);
         queue.push(msg);
         io.emit('chat message', msg);
     });
