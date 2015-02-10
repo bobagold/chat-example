@@ -3,7 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Queue = require('./Queue.js');
 
-var queue = new Queue(1);
+var queue = new Queue(100);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
