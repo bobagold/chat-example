@@ -25,3 +25,4 @@ Here are some ideas to improve the application:
 # Issues
 
   - Client: handle server disconnect, do not loose outgoing messages
+  - After server restart and restore message from first client, reconnected clients receive message history
