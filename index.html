@@ -24,17 +24,30 @@
     <script>
       var socket = io();
       var username = $.cookie('username');
+      var usernames = [];
       if (username === null) {
         username = Math.random().toString();
         $.cookie('username', username);
       }
-      $('form').submit(function(){
+      $('form').submit(function () {
         socket.emit('chat message', [username, $('#m').val()]);
         $('#m').val('');
         return false;
       });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text((msg[0] === username ? 'me: ' : '?: ' ) + msg[1]));
+      var nick = function (nick) {
+        if (nick === username) {
+          return 'me';
+        }
+        var pos = usernames.indexOf(nick);
+        if (pos === -1) {
+          usernames.push(nick);
+          pos = usernames.length - 1;
+        }
+        return 'sameperson' + pos;
+
+      };
+      socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text(nick(msg[0]) + ': ' + msg[1]));
       });
     </script>
   </body>
