@@ -30,6 +30,7 @@
         username = Math.random().toString();
         $.cookie('username', username);
       }
+      socket.emit('restoreClient', username);
       $('form').submit(function () {
         socket.emit('chat message', [username, $('#m').val()]);
         $('#m').val('');
@@ -47,12 +48,22 @@
         return 'sameperson' + pos;
 
       };
-      socket.on('chat message', function (msg) {
+      var onChatMessage = function (msg) {
         messages.push(msg);
         $('#messages').append($('<li>').text(nick(msg[0]) + ': ' + msg[1]));
+      };
+      socket.on('chat message', onChatMessage);
+      socket.on('restoreServer', function () {
+        socket.emit('restoreServer', messages);
       });
-      socket.on('restore', function () {
-        socket.emit('restore', messages);
+      socket.on('restoreClient', function (history) {
+        if (!messages.length) {
+          for (var i in history) {
+            if (history.hasOwnProperty(i)) {
+              onChatMessage(history[i]);
+            }
+          }
+        }
       });
     </script>
   </body>

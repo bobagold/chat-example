@@ -11,13 +11,13 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
     console.log('a user connected');
-    for (var i = 0; i < queue.elements.length; i++) {
-        socket.emit('chat message', queue.elements[i]);
-    }
     if (queue.elements.length === 0) {
-        socket.emit('restore', []);
+        socket.emit('restoreServer', []);
     }
-    socket.on('restore', function (messages) {
+    socket.on('restoreClient', function () {
+        socket.emit('restoreClient', queue.elements);
+    });
+    socket.on('restoreServer', function (messages) {
         if (queue.elements.length === 0) {
             queue.elements = messages;
         }
