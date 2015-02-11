@@ -25,6 +25,7 @@
       var socket = io();
       var username = $.cookie('username');
       var usernames = [];
+      var messages = [];
       if (username === null) {
         username = Math.random().toString();
         $.cookie('username', username);
@@ -47,7 +48,11 @@
 
       };
       socket.on('chat message', function (msg) {
+        messages.push(msg);
         $('#messages').append($('<li>').text(nick(msg[0]) + ': ' + msg[1]));
+      });
+      socket.on('restore', function () {
+        socket.emit('restore', messages);
       });
     </script>
   </body>
